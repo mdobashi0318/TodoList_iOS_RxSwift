@@ -13,6 +13,18 @@
 		6D3B5FB22A57CEB900466F6E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D3B5FB02A57CEB900466F6E /* Main.storyboard */; };
 		6D3B5FB42A57CEBA00466F6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D3B5FB32A57CEBA00466F6E /* Assets.xcassets */; };
 		6D3B5FB72A57CEBA00466F6E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D3B5FB52A57CEBA00466F6E /* LaunchScreen.storyboard */; };
+		6D3B5FC02A57D39A00466F6E /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3B5FBF2A57D39A00466F6E /* RxCocoa */; };
+		6D3B5FC22A57D39A00466F6E /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3B5FC12A57D39A00466F6E /* RxSwift */; };
+		6D3B5FC52A57D3ED00466F6E /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3B5FC42A57D3ED00466F6E /* Realm */; };
+		6D3B5FC72A57D3ED00466F6E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3B5FC62A57D3ED00466F6E /* RealmSwift */; };
+		6D3B5FC92A57E12C00466F6E /* ToDoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3B5FC82A57E12C00466F6E /* ToDoModel.swift */; };
+		6D3B5FCB2A57E21400466F6E /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3B5FCA2A57E21400466F6E /* NotificationManager.swift */; };
+		6D3B5FCD2A57E2B000466F6E /* Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3B5FCC2A57E2B000466F6E /* Format.swift */; };
+		6D3B5FD12A57E5BE00466F6E /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3B5FD02A57E5BE00466F6E /* Errors.swift */; };
+		6D3B5FD32A57E62200466F6E /* CompletionFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3B5FD22A57E62200466F6E /* CompletionFlag.swift */; };
+		6D3B5FD52A57FA5E00466F6E /* TodoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3B5FD42A57FA5E00466F6E /* TodoListViewModel.swift */; };
+		6D3B5FE02A580DD400466F6E /* TodoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3B5FDE2A580DD400466F6E /* TodoCell.swift */; };
+		6D3B5FE12A580DD400466F6E /* TodoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D3B5FDF2A580DD400466F6E /* TodoCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +36,14 @@
 		6D3B5FB32A57CEBA00466F6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6D3B5FB62A57CEBA00466F6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6D3B5FB82A57CEBA00466F6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6D3B5FC82A57E12C00466F6E /* ToDoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoModel.swift; sourceTree = "<group>"; };
+		6D3B5FCA2A57E21400466F6E /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		6D3B5FCC2A57E2B000466F6E /* Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Format.swift; sourceTree = "<group>"; };
+		6D3B5FD02A57E5BE00466F6E /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		6D3B5FD22A57E62200466F6E /* CompletionFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionFlag.swift; sourceTree = "<group>"; };
+		6D3B5FD42A57FA5E00466F6E /* TodoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewModel.swift; sourceTree = "<group>"; };
+		6D3B5FDE2A580DD400466F6E /* TodoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCell.swift; sourceTree = "<group>"; };
+		6D3B5FDF2A580DD400466F6E /* TodoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodoCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +51,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D3B5FC72A57D3ED00466F6E /* RealmSwift in Frameworks */,
+				6D3B5FC52A57D3ED00466F6E /* Realm in Frameworks */,
+				6D3B5FC22A57D39A00466F6E /* RxSwift in Frameworks */,
+				6D3B5FC02A57D39A00466F6E /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,13 +82,69 @@
 			children = (
 				6D3B5FAA2A57CEB900466F6E /* AppDelegate.swift */,
 				6D3B5FAC2A57CEB900466F6E /* SceneDelegate.swift */,
-				6D3B5FAE2A57CEB900466F6E /* ViewController.swift */,
-				6D3B5FB02A57CEB900466F6E /* Main.storyboard */,
+				6D3B5FDC2A580C9900466F6E /* Screen */,
+				6D3B5FDA2A580C8000466F6E /* View */,
+				6D3B5FCF2A57E3AF00466F6E /* Model */,
+				6D3B5FCE2A57E3A300466F6E /* Other */,
 				6D3B5FB32A57CEBA00466F6E /* Assets.xcassets */,
 				6D3B5FB52A57CEBA00466F6E /* LaunchScreen.storyboard */,
 				6D3B5FB82A57CEBA00466F6E /* Info.plist */,
 			);
 			path = TodoList_iOS_RxSwift;
+			sourceTree = "<group>";
+		};
+		6D3B5FCE2A57E3A300466F6E /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				6D3B5FD02A57E5BE00466F6E /* Errors.swift */,
+				6D3B5FD22A57E62200466F6E /* CompletionFlag.swift */,
+				6D3B5FCA2A57E21400466F6E /* NotificationManager.swift */,
+				6D3B5FCC2A57E2B000466F6E /* Format.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		6D3B5FCF2A57E3AF00466F6E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6D3B5FC82A57E12C00466F6E /* ToDoModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6D3B5FDA2A580C8000466F6E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6D3B5FDB2A580C8D00466F6E /* Cell */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6D3B5FDB2A580C8D00466F6E /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				6D3B5FDE2A580DD400466F6E /* TodoCell.swift */,
+				6D3B5FDF2A580DD400466F6E /* TodoCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		6D3B5FDC2A580C9900466F6E /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				6D3B5FDD2A580CA700466F6E /* TodoListView */,
+			);
+			path = Screen;
+			sourceTree = "<group>";
+		};
+		6D3B5FDD2A580CA700466F6E /* TodoListView */ = {
+			isa = PBXGroup;
+			children = (
+				6D3B5FB02A57CEB900466F6E /* Main.storyboard */,
+				6D3B5FAE2A57CEB900466F6E /* ViewController.swift */,
+				6D3B5FD42A57FA5E00466F6E /* TodoListViewModel.swift */,
+			);
+			path = TodoListView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +163,12 @@
 			dependencies = (
 			);
 			name = TodoList_iOS_RxSwift;
+			packageProductDependencies = (
+				6D3B5FBF2A57D39A00466F6E /* RxCocoa */,
+				6D3B5FC12A57D39A00466F6E /* RxSwift */,
+				6D3B5FC42A57D3ED00466F6E /* Realm */,
+				6D3B5FC62A57D3ED00466F6E /* RealmSwift */,
+			);
 			productName = TodoList_iOS_RxSwift;
 			productReference = 6D3B5FA72A57CEB900466F6E /* TodoList_iOS_RxSwift.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +197,10 @@
 				Base,
 			);
 			mainGroup = 6D3B5F9E2A57CEB900466F6E;
+			packageReferences = (
+				6D3B5FBE2A57D39A00466F6E /* XCRemoteSwiftPackageReference "RxSwift" */,
+				6D3B5FC32A57D3ED00466F6E /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			productRefGroup = 6D3B5FA82A57CEB900466F6E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -128,6 +218,7 @@
 				6D3B5FB72A57CEBA00466F6E /* LaunchScreen.storyboard in Resources */,
 				6D3B5FB42A57CEBA00466F6E /* Assets.xcassets in Resources */,
 				6D3B5FB22A57CEB900466F6E /* Main.storyboard in Resources */,
+				6D3B5FE12A580DD400466F6E /* TodoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,8 +230,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D3B5FAF2A57CEB900466F6E /* ViewController.swift in Sources */,
+				6D3B5FC92A57E12C00466F6E /* ToDoModel.swift in Sources */,
+				6D3B5FCD2A57E2B000466F6E /* Format.swift in Sources */,
+				6D3B5FE02A580DD400466F6E /* TodoCell.swift in Sources */,
+				6D3B5FD32A57E62200466F6E /* CompletionFlag.swift in Sources */,
+				6D3B5FD52A57FA5E00466F6E /* TodoListViewModel.swift in Sources */,
+				6D3B5FCB2A57E21400466F6E /* NotificationManager.swift in Sources */,
 				6D3B5FAB2A57CEB900466F6E /* AppDelegate.swift in Sources */,
 				6D3B5FAD2A57CEB900466F6E /* SceneDelegate.swift in Sources */,
+				6D3B5FD12A57E5BE00466F6E /* Errors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,7 +314,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -270,7 +368,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -293,8 +391,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -302,6 +399,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "masaharu.dobashi.TodoList-iOS-RxSwift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -321,8 +421,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -330,6 +429,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "masaharu.dobashi.TodoList-iOS-RxSwift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -358,6 +460,48 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6D3B5FBE2A57D39A00466F6E /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = exactVersion;
+				version = 6.6.0;
+			};
+		};
+		6D3B5FC32A57D3ED00466F6E /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				kind = exactVersion;
+				version = 10.41.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6D3B5FBF2A57D39A00466F6E /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D3B5FBE2A57D39A00466F6E /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		6D3B5FC12A57D39A00466F6E /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D3B5FBE2A57D39A00466F6E /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		6D3B5FC42A57D3ED00466F6E /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D3B5FC32A57D3ED00466F6E /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		6D3B5FC62A57D3ED00466F6E /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D3B5FC32A57D3ED00466F6E /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6D3B5F9F2A57CEB900466F6E /* Project object */;
 }

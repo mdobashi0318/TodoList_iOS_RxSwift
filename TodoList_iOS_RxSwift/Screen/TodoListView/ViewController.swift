@@ -17,12 +17,41 @@ class ViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
        
+    private let addButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: nil, action: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.add()
+        initNavigationItem()
+        initTableView()
+      
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         viewModel.findAll()
+    }
+    
+    
+    private func initNavigationItem() {
+        navigationItem.rightBarButtonItem = addButton
+        
+        addButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self else {
+                return
+            }
+    
+            let navi = UINavigationController(rootViewController: InputTodoViewController())
+            navi.modalPresentationStyle = .fullScreen
+            self.navigationController?.present(navi, animated: true)
+            
+            
+        })
+        .disposed(by: disposeBag)
+    }
+    
+    private func initTableView() {
         tableView.register(UINib(nibName: "TodoCell", bundle: nil), forCellReuseIdentifier: "TodoCell")
         viewModel.model.bind(to: tableView.rx.items(cellIdentifier: "TodoCell", cellType: TodoCell.self)) { row, todo, cell in
             cell.titleLabel.text = todo.title

@@ -25,7 +25,9 @@ class ViewController: UIViewController {
         viewModel.findAll()
         tableView.register(UINib(nibName: "TodoCell", bundle: nil), forCellReuseIdentifier: "TodoCell")
         viewModel.model.bind(to: tableView.rx.items(cellIdentifier: "TodoCell", cellType: TodoCell.self)) { row, todo, cell in
-            cell.textLabel?.text = todo.title
+            cell.titleLabel.text = todo.title
+            cell.completeLabel.text = todo.completionFlag == "1" ? "完了" : "未完了"
+            cell.dateLabel.text = todo.deadlineTime
         }
         .disposed(by: disposeBag)
     }

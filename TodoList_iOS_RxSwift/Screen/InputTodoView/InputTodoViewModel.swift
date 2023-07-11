@@ -11,15 +11,21 @@ import RxSwift
 import RxCocoa
 
 
+
+enum ErrorType: CaseIterable {
+    case DB
+    case Other
+}
+
 struct InputTodoViewModel {
     
     let title = BehaviorRelay(value: "")
     let date = BehaviorRelay(value: Date())
     let details = BehaviorRelay(value: "")
     
-    func add(success: @escaping () -> Void, failure: @escaping () -> Void)  {    
+    func add(success: @escaping () -> Void, failure: @escaping (ErrorType) -> Void)  {
         if title.value.isEmpty || details.value.isEmpty {
-            failure()
+            failure(.Other)
             return
         }
         
@@ -33,7 +39,7 @@ struct InputTodoViewModel {
             try ToDoModel.add(model)
             success()
         } catch {
-            failure()
+            failure(.DB)
         }
         
         

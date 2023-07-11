@@ -24,7 +24,6 @@ class InputTodoViewController: UIViewController {
     
     @IBOutlet weak var datePicker: UIDatePicker!
     
-
     @IBOutlet weak var detailTextView: UITextView!
     
     
@@ -33,9 +32,8 @@ class InputTodoViewController: UIViewController {
         initNavigationItem()
         initTextEvent()
         
-
     }
-
+    
     
     
     private func initNavigationItem() {
@@ -52,8 +50,17 @@ class InputTodoViewController: UIViewController {
                 AlertManager.showAlert(self, type: .close, message: "Todoを登録しました", didTapPositiveButton: { _ in
                     self.dismiss(animated: true)
                 })
-            }, failure: {
-                AlertManager.showAlert(self, type: .close, message: "Todoを登録に失敗しました。")
+            }, failure: { type in
+                switch type {
+                case .DB:
+                    AlertManager.showAlert(self, type: .close, message: "Todoを登録に失敗しました。")
+                case .Other:
+                    if self.viewModel.title.value.isEmpty {
+                        AlertManager.showAlert(self, type: .close, message: "タイトルを入力してください")
+                    } else {
+                        AlertManager.showAlert(self, type: .close, message: "詳細を入力してください")
+                    }
+                }
             })
         })
         .disposed(by: disposeBag)
@@ -89,5 +96,5 @@ class InputTodoViewController: UIViewController {
         })
         .disposed(by: disposeBag)
     }
-
+    
 }

@@ -9,6 +9,13 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+
+enum Mode: CaseIterable {
+    case Add
+    case Edit
+}
+
+
 class InputTodoViewController: UIViewController {
     
     private let viewModel = InputTodoViewModel()
@@ -27,8 +34,17 @@ class InputTodoViewController: UIViewController {
     @IBOutlet weak var detailTextView: UITextView!
     
     
+    var mode: Mode = .Add
+    
+    var id: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let id {
+            viewModel.find(id: id)
+        }
+        
         initNavigationItem()
         initTextEvent()
         
@@ -37,7 +53,8 @@ class InputTodoViewController: UIViewController {
     
     
     private func initNavigationItem() {
-        navigationItem.title = "Todo作成"
+        navigationItem.title = mode == .Add ? "Todo作成" : "Todo更新"
+        
         navigationItem.rightBarButtonItem = addButton
         navigationItem.leftBarButtonItem = closeButton
         
@@ -46,22 +63,12 @@ class InputTodoViewController: UIViewController {
                 return
             }
             
-            viewModel.add(success: {
-                AlertManager.showAlert(self, type: .close, message: "Todoを登録しました", didTapPositiveButton: { _ in
-                    self.dismiss(animated: true)
-                })
-            }, failure: { type in
-                switch type {
-                case .DB:
-                    AlertManager.showAlert(self, type: .close, message: "Todoを登録に失敗しました。")
-                case .Other:
-                    if self.viewModel.title.value.isEmpty {
-                        AlertManager.showAlert(self, type: .close, message: "タイトルを入力してください")
-                    } else {
-                        AlertManager.showAlert(self, type: .close, message: "詳細を入力してください")
-                    }
-                }
-            })
+            if mode == .Add {
+                add()
+            } else {
+                update()
+            }
+     
         })
         .disposed(by: disposeBag)
         
@@ -77,6 +84,7 @@ class InputTodoViewController: UIViewController {
     
     
     private func initTextEvent() {
+        
         titleTextField.rx.text.subscribe(onNext: { text in
             self.viewModel.title.accept(text ?? "")
         })
@@ -95,6 +103,59 @@ class InputTodoViewController: UIViewController {
             
         })
         .disposed(by: disposeBag)
+        
+        
+        
+        viewModel.model.bind(to: { model in
+            titleTextField.text = model.value.title
+            datePicker.date = Format().dateFromString(string: model.value.deadlineTime) ?? Date()
+            detailTextView.text = model.value.detail
+            
+            self.viewModel.title.accept(model.value.title)
+            self.viewModel.date.accept(Format().dateFromString(string: model.value.deadlineTime) ?? Date())
+            self.viewModel.details.accept(model.value.detail)
+        })
     }
     
+    
+    
+    private func add() {
+        viewModel.add(success: {
+            AlertManager.showAlert(self, type: .close, message: "Todoを登録しました", didTapPositiveButton: { _ in
+                self.dismiss(animated: true)
+            })
+        }, failure: { type in
+            switch type {
+            case .DB:
+                AlertManager.showAlert(self, type: .close, message: "Todoを登録に失敗しました。")
+            case .Other:
+                if self.viewModel.title.value.isEmpty {
+                    AlertManager.showAlert(self, type: .close, message: "タイトルを入力してください")
+                } else {
+                    AlertManager.showAlert(self, type: .close, message: "詳細を入力してください")
+                }
+            }
+        })
+    }
+    
+    
+    private func update() {
+        viewModel.update(success: {
+            AlertManager.showAlert(self, type: .close, message: "Todoを更新しました", didTapPositiveButton: { _ in
+                NotificationCenter.default.post(name: Notification.Name(UPDATE_DETAIL), object: nil)
+                self.dismiss(animated: true)
+            })
+        }, failure: { type in
+            switch type {
+            case .DB:
+                AlertManager.showAlert(self, type: .close, message: "Todoを更新に失敗しました。")
+            case .Other:
+                if self.viewModel.title.value.isEmpty {
+                    AlertManager.showAlert(self, type: .close, message: "タイトルを入力してください")
+                } else {
+                    AlertManager.showAlert(self, type: .close, message: "詳細を入力してください")
+                }
+            }
+        })
+    }
 }

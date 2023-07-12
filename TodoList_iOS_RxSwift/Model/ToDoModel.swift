@@ -115,7 +115,7 @@ final class ToDoModel: Object {
     ///   - updateTodo: 更新するTodo
     ///   - result: Todoの更新時のエラー
     ///   - result: Todoの登録時の成功すればVoid、またはエラーを返す
-    static func update(updateTodo: ToDoModel) throws {
+    static func update(_ updateTodo: ToDoModel) throws {
         guard let realm,
               let toDoModel: ToDoModel = ToDoModel.find(id: updateTodo.id) else {
             throw TodoModelError(message: "更新エラー")

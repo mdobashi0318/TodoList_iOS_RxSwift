@@ -31,13 +31,21 @@ class TodoDetailViewController: UIViewController {
         initNavigationItem()
         viewModel.find(id)
 
-        viewModel.model.bind(to: { model in
-            titleLabel.text = model.value.title
-            dateLabel.text = model.value.deadlineTime
-            detailLable.text = model.value.detail
-            
+        viewModel.model.subscribe(onNext: { [weak self] model in
+            guard let self else { return }
+            self.titleLabel.text = model.title
+            self.dateLabel.text = model.deadlineTime
+            self.detailLable.text = model.detail
         })
+        .disposed(by: disposeBag)
         
+        
+        NotificationCenter.default.rx.notification(Notification.Name(rawValue: UPDATE_DETAIL))
+            .subscribe { [weak self] _ in
+                guard let self else { return }
+                viewModel.find(id)
+            }
+            .disposed(by: disposeBag)
     }
     
     
@@ -50,7 +58,10 @@ class TodoDetailViewController: UIViewController {
             }
             
             AlertManager.alertSheetAction(self, message: "Todoをどうしますか?", didTapEditButton: { _ in
-                let navi = UINavigationController(rootViewController: InputTodoViewController())
+                let vc = InputTodoViewController()
+                vc.mode = .Edit
+                vc.id = self.viewModel.model.value.id
+                let navi = UINavigationController(rootViewController: vc)
                 navi.modalPresentationStyle = .fullScreen
                 self.navigationController?.present(navi, animated: true)
             }, didTapDeleteButton: { _ in

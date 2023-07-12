@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D2E79BB2A5E4E7000A3A525 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E79BA2A5E4E7000A3A525 /* Const.swift */; };
 		6D3B5FAB2A57CEB900466F6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3B5FAA2A57CEB900466F6E /* AppDelegate.swift */; };
 		6D3B5FAD2A57CEB900466F6E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3B5FAC2A57CEB900466F6E /* SceneDelegate.swift */; };
 		6D3B5FAF2A57CEB900466F6E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3B5FAE2A57CEB900466F6E /* ViewController.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6D2E79BA2A5E4E7000A3A525 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		6D3B5FA72A57CEB900466F6E /* TodoList_iOS_RxSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoList_iOS_RxSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D3B5FAA2A57CEB900466F6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D3B5FAC2A57CEB900466F6E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				6D3B5FD22A57E62200466F6E /* CompletionFlag.swift */,
 				6D3B5FCA2A57E21400466F6E /* NotificationManager.swift */,
 				6D3B5FCC2A57E2B000466F6E /* Format.swift */,
+				6D2E79BA2A5E4E7000A3A525 /* Const.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				6D7FE8DB2A5BB4E000E9AEC6 /* AlertManager.swift in Sources */,
 				6D3B5FAD2A57CEB900466F6E /* SceneDelegate.swift in Sources */,
 				6D3B5FD12A57E5BE00466F6E /* Errors.swift in Sources */,
+				6D2E79BB2A5E4E7000A3A525 /* Const.swift in Sources */,
 				6DDE64022A5BA3D600C2061A /* InputTodoViewController.swift in Sources */,
 				6DF485B32A5D1C1D00FF2DB9 /* TodoDetailViewController.swift in Sources */,
 			);

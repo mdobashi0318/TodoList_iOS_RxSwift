@@ -26,6 +26,9 @@ struct TodoDetailViewModel {
     }
     
     
+    func updateCompleteFlag(flag: Bool) {
+        ToDoModel.updateCompletionFlag(id: id, flag: flag ? CompletionFlag.completion : CompletionFlag.unfinished)
+    }
     
     func delete(id: String, success: @escaping () -> Void, failure: @escaping () -> Void)  {
         do {

@@ -150,18 +150,19 @@ final class ToDoModel: Object {
     /// - Parameters:
     ///   - updateTodo: 更新するTodo
     ///   - flag: 変更する値
-    static func updateCompletionFlag(updateTodo: ToDoModel, flag: CompletionFlag) {
-        guard let realm else {
+    static func updateCompletionFlag(id: String, flag: CompletionFlag) {
+        guard let realm,
+              let model: ToDoModel = ToDoModel.find(id: id)else {
             return
         }
-        guard let toDoModel: ToDoModel = ToDoModel.find(id: updateTodo.id) else { return }
+        
         try? realm.write() {
-            toDoModel.completionFlag = flag.rawValue
+            model.completionFlag = flag.rawValue
         }
-        if updateTodo.completionFlag == CompletionFlag.completion.rawValue {
-            NotificationManager().removeNotification([toDoModel.id])
+        if model.completionFlag == CompletionFlag.completion.rawValue {
+            NotificationManager().removeNotification([model.id])
         } else {
-            NotificationManager().addNotification(toDoModel: toDoModel) { _ in
+            NotificationManager().addNotification(toDoModel: model) { _ in
                 /// 何もしない
             }
         }

@@ -23,6 +23,9 @@ class TodoDetailViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
+    @IBOutlet weak var completeSwtch: UISwitch!
+    
+    
     private let ellipsisButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: nil, action: nil)
     
     override func viewDidLoad() {
@@ -36,6 +39,7 @@ class TodoDetailViewController: UIViewController {
             self.titleLabel.text = model.title
             self.dateLabel.text = model.deadlineTime
             self.detailLable.text = model.detail
+            self.completeSwtch.isOn = CompletionFlag.completion.rawValue == model.completionFlag ? true : false
         })
         .disposed(by: disposeBag)
         
@@ -46,6 +50,13 @@ class TodoDetailViewController: UIViewController {
                 viewModel.find(id)
             }
             .disposed(by: disposeBag)
+        
+        
+        completeSwtch.rx.isOn.changed.subscribe(onNext: { [weak self] isOn in
+            guard let self else { return }
+            self.viewModel.updateCompleteFlag(flag: isOn)
+        })
+        .disposed(by: disposeBag)
     }
     
     
@@ -80,5 +91,6 @@ class TodoDetailViewController: UIViewController {
         })
         .disposed(by: disposeBag)
     }
+    
 
 }

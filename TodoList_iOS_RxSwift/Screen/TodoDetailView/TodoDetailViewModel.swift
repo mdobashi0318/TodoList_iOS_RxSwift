@@ -13,8 +13,26 @@ struct TodoDetailViewModel {
     
     var model =  BehaviorRelay<ToDoModel>(value: ToDoModel())
     
+    
+    var id: String {
+        get {
+            return model.value.id
+        }
+    }
+    
     func find(_ id: String) {
         guard let _model = ToDoModel.find(id: id) else { return }
         model.accept(_model)
+    }
+    
+    
+    
+    func delete(id: String, success: @escaping () -> Void, failure: @escaping () -> Void)  {
+        do {
+            try ToDoModel.delete(id: id)
+            success()
+        } catch {
+            failure()
+        }
     }
 }

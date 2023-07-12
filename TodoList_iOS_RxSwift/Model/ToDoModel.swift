@@ -176,19 +176,17 @@ final class ToDoModel: Object {
     /// - Parameters:
     ///   - deleteTodo: 削除するTodo
     ///   - result: Todoの登録時の成功すればVoid、またはエラーを返す
-    static func delete(deleteTodo: ToDoModel) throws {
-        guard let realm else {
+    static func delete(id: String) throws {
+        guard let realm,
+        let model = find(id: id) else {
             throw TodoModelError(message: "削除エラー")
         }
         
-        NotificationManager().removeNotification([deleteTodo.id])
-        
-        
         do {
             try realm.write() {
-                realm.delete(deleteTodo)
+                realm.delete(model)
             }
-            
+            NotificationManager().removeNotification([id])
             
         }
         catch {
@@ -207,7 +205,7 @@ final class ToDoModel: Object {
         }
         
         
-    
+        
         
         
         NotificationManager().allRemoveNotification()

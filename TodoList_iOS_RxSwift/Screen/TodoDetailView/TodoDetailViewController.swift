@@ -60,16 +60,20 @@ class TodoDetailViewController: UIViewController {
             AlertManager.alertSheetAction(self, message: "Todoをどうしますか?", didTapEditButton: { _ in
                 let vc = InputTodoViewController()
                 vc.mode = .Edit
-                vc.id = self.viewModel.model.value.id
+                vc.id = self.viewModel.id
                 let navi = UINavigationController(rootViewController: vc)
                 navi.modalPresentationStyle = .fullScreen
                 self.navigationController?.present(navi, animated: true)
             }, didTapDeleteButton: { _ in
                 AlertManager.showAlert(self, type: .delete, message: "このTodoを削除しますか?", didTapPositiveButton: { _ in
-                    // TODO: 削除処理
-                    AlertManager.showAlert(self, type: .close, message: "削除しました", didTapPositiveButton: { _ in
-                        self.navigationController?.popViewController(animated: true)
+                    self.viewModel.delete(id: self.viewModel.id, success: {
+                        AlertManager.showAlert(self, type: .close, message: "削除しました", didTapPositiveButton: { _ in
+                            self.navigationController?.popViewController(animated: true)
+                        })
+                    }, failure: {
+                        AlertManager.showAlert(self, type: .close, message: "削除に失敗しました")
                     })
+                  
                 })
             })
             

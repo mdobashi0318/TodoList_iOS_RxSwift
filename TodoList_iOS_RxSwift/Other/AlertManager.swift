@@ -11,7 +11,7 @@ import UIKit
 struct AlertManager {
 
     enum AlertType: CaseIterable {
-        case delete, close
+        case delete, close, confirm
     }
 
     /// アラートを表示する
@@ -37,6 +37,16 @@ struct AlertManager {
             controller.addAction(UIAlertAction(title: "閉じる",
                                                style: .cancel,
                                                handler: didTapPositiveButton))
+        case .confirm:
+            controller.addAction(UIAlertAction(title: "OK",
+                                               style: .default,
+                                               handler: didTapPositiveButton)
+            )
+
+            controller.addAction(UIAlertAction(title: "キャンセル",
+                                               style: .cancel,
+                                               handler: didTapNegativeButton)
+            )
         }
 
         vc.present(controller, animated: true, completion: nil)

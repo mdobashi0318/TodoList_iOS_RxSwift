@@ -19,6 +19,8 @@ class ViewController: UIViewController {
     
     private let addButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: nil, action: nil)
     
+    private let deleteButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: nil, action: nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,6 +38,7 @@ class ViewController: UIViewController {
     
     private func initNavigationItem() {
         navigationItem.rightBarButtonItem = addButton
+        navigationItem.leftBarButtonItem = deleteButton
         
         addButton.rx.tap.subscribe(onNext: { [weak self] in
             guard let self else {
@@ -45,6 +48,26 @@ class ViewController: UIViewController {
             let navi = UINavigationController(rootViewController: InputTodoViewController())
             navi.modalPresentationStyle = .fullScreen
             self.navigationController?.present(navi, animated: true)
+        })
+        .disposed(by: disposeBag)
+        
+        
+        
+        deleteButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self else {
+                return
+            }
+            
+            AlertManager.showAlert(self, type: .confirm, message: "Todoを全件削除しますか?", didTapPositiveButton: { _ in
+                self.viewModel.deleteAll(success: {
+                    AlertManager.showAlert(self, type: .close, message: "全件削除しました", didTapPositiveButton: { _ in
+                        self.tableView.reloadData()
+                    })
+                }, failure: {
+                    AlertManager.showAlert(self, type: .close, message: "削除に失敗しました")
+                })
+            })
+            
         })
         .disposed(by: disposeBag)
     }

@@ -197,20 +197,19 @@ final class ToDoModel: Object {
     
     
     /// 全件削除
-    static func allDelete()  {
+    static func deleteAll() throws {
         guard let realm else {
             return
         }
-        try? realm.write {
-            realm.deleteAll()
+        do {
+            try realm.write {
+                realm.deleteAll()
+            }
+            NotificationManager().allRemoveNotification()
+            
+        } catch {
+            throw TodoModelError(message: "削除エラー")
         }
-        
-        
-        
-        
-        
-        NotificationManager().allRemoveNotification()
-        
     }
     
 }

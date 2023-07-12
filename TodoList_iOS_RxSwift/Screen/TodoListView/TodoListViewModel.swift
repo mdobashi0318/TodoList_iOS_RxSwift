@@ -18,6 +18,20 @@ struct TodoListViewModel {
 
     func findAll() {
         model.accept(ToDoModel.allFindTodo()) 
-    }    
+    }
+    
+    
+    func deleteAll(success: @escaping () -> Void, failure: @escaping () -> Void)  {
+        
+        do {
+            try ToDoModel.deleteAll()
+            model.accept([])
+            success()
+        } catch {
+            failure()
+        }
+        
+        
+    }
     
 }

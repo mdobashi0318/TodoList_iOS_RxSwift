@@ -91,8 +91,8 @@ class InputTodoViewController: UIViewController {
         .disposed(by: disposeBag)
         
         
+        datePicker.minimumDate = Calendar.current.date(byAdding: .minute, value: 1, to: Date()) ?? Date()
         datePicker.rx.date.changed.subscribe(onNext: { date in
-            print("date: \(date)")
             self.viewModel.date.accept(date)
         })
         .disposed(by: disposeBag)

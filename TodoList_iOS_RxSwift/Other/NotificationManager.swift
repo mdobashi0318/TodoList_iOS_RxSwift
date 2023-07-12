@@ -49,7 +49,7 @@ struct NotificationManager {
         let calendar = Calendar.current
         let dateComponent = calendar.dateComponents([.year, .month, .day, .hour, .minute] , from: date)
         let trigger:UNCalendarNotificationTrigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: false)
-        let request:UNNotificationRequest = UNNotificationRequest.init(identifier: toDoModel.createTime, content: content, trigger: trigger)
+        let request:UNNotificationRequest = UNNotificationRequest.init(identifier: toDoModel.id, content: content, trigger: trigger)
         let center:UNUserNotificationCenter = UNUserNotificationCenter.current()
         
         center.add(request) { (error) in

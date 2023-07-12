@@ -21,6 +21,8 @@ class ViewController: UIViewController {
     
     private let deleteButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: nil, action: nil)
     
+    @IBOutlet weak var noTodoView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,6 +35,15 @@ class ViewController: UIViewController {
         super.viewWillAppear(animated)
         
         viewModel.findAll()
+        viewModel.model.subscribe(onNext: { [weak self] model in
+            guard let self else { return }
+            if model.isEmpty {
+                self.noTodoView.isHidden = false
+            } else {
+                self.noTodoView.isHidden = true
+            }
+        })
+        .disposed(by: disposeBag)
     }
     
     

@@ -21,18 +21,38 @@
                                 <rect key="frame" x="0.0" y="155" width="393" height="663"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n30-Ek-2E4">
+                                <rect key="frame" x="30" y="175" width="333" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Todoはありません" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8o2-St-xC7">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="rlg-Cj-OsQ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="n30-Ek-2E4" secondAttribute="trailing" constant="30" id="0yj-Uc-yKH"/>
+                            <constraint firstItem="n30-Ek-2E4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="3EA-pX-IUu"/>
                             <constraint firstItem="PC5-K3-K3u" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="VZh-il-Laa"/>
                             <constraint firstItem="PC5-K3-K3u" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="gpK-8o-MPS"/>
                             <constraint firstAttribute="trailing" secondItem="PC5-K3-K3u" secondAttribute="trailing" id="mgA-Z3-znj"/>
+                            <constraint firstItem="n30-Ek-2E4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="rva-gD-AD0"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="PC5-K3-K3u" secondAttribute="bottom" id="vE4-45-rad"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="TodoList" id="hYB-gp-MxX"/>
                     <connections>
+                        <outlet property="noTodoView" destination="n30-Ek-2E4" id="KSR-X6-yXj"/>
                         <outlet property="tableView" destination="PC5-K3-K3u" id="BCN-pu-tt3"/>
                     </connections>
                 </viewController>

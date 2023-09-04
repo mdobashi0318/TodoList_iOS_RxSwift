@@ -89,7 +89,7 @@ class ViewController: UIViewController {
         tableView.register(UINib(nibName: "TodoCell", bundle: nil), forCellReuseIdentifier: "TodoCell")
         viewModel.model.bind(to: tableView.rx.items(cellIdentifier: "TodoCell", cellType: TodoCell.self)) { row, todo, cell in
             cell.titleLabel.text = todo.title
-            cell.completeLabel.text = todo.completionFlag == "1" ? "完了" : "未完了"
+            cell.completeLabel.text = todo.completionFlag == CompletionFlag.completion.rawValue ? "完了" : "未完了"
             cell.dateLabel.text = todo.deadlineTime
         }
         .disposed(by: disposeBag)

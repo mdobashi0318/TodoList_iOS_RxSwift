@@ -42,8 +42,8 @@ struct InputTodoViewModel {
         let model = ToDoModel()
         model.title = title.value
         model.detail = details.value
-        model.deadlineTime = Format().stringFromDate(date: date.value)
-        model.createTime = Format().stringFromDate(date: Date(), addSec: true)
+        model.deadlineTime = Format.stringFromDate(date: date.value)
+        model.createTime = Format.stringFromDate(date: Date(), addSec: true)
         
         do {
             try ToDoModel.add(model)
@@ -64,7 +64,7 @@ struct InputTodoViewModel {
         model.id = self.model.value.id
         model.title = title.value
         model.detail = details.value
-        model.deadlineTime = Format().stringFromDate(date: date.value)
+        model.deadlineTime = Format.stringFromDate(date: date.value)
         
         do {
             try ToDoModel.update(model)

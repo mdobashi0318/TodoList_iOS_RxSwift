@@ -39,7 +39,7 @@ struct NotificationManager {
         content.sound = UNNotificationSound.default
         
         //通知する日付を設定
-        guard let date:Date = Format().dateFromString(string: toDoModel.deadlineTime) else {
+        guard let date:Date = Format.dateFromString(string: toDoModel.deadlineTime) else {
             print("期限の登録に失敗しました")
             isRequestResponse(false)
             

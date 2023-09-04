@@ -108,11 +108,11 @@ class InputTodoViewController: UIViewController {
         
         viewModel.model.bind(to: { model in
             titleTextField.text = model.value.title
-            datePicker.date = Format().dateFromString(string: model.value.deadlineTime) ?? Date()
+            datePicker.date = Format.dateFromString(string: model.value.deadlineTime) ?? Date()
             detailTextView.text = model.value.detail
             
             self.viewModel.title.accept(model.value.title)
-            self.viewModel.date.accept(Format().dateFromString(string: model.value.deadlineTime) ?? Date())
+            self.viewModel.date.accept(Format.dateFromString(string: model.value.deadlineTime) ?? Date())
             self.viewModel.details.accept(model.value.detail)
         })
     }

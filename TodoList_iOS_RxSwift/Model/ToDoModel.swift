@@ -89,7 +89,7 @@ final class ToDoModel: Object {
         toDoModel.deadlineTime = todo.deadlineTime
         toDoModel.detail = todo.detail
         toDoModel.completionFlag = CompletionFlag.unfinished.rawValue
-        toDoModel.createTime = Format().stringFromDate(date: Date(), addSec: true)
+        toDoModel.createTime = Format.stringFromDate(date: Date(), addSec: true)
         
         do {
             try realm.write() {

@@ -12,4 +12,6 @@ enum CompletionFlag: String {
     case unfinished = "0"
     /// 完了
     case completion = "1"
+    /// 期限切れ
+    case expired = "2"
 }

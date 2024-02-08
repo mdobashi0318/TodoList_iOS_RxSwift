@@ -35,8 +35,11 @@ final class ToDoModel: Object {
     /// - 1: 完了
     @Persisted var completionFlag: String = ""
     
-    /// Todoの作成日時
-    @Persisted var createTime: String = ""
+    /// 作成日時
+    @Persisted var created_at: String = ""
+    
+    /// 更新日時
+    @Persisted var updated_at: String = ""
     
     // MARK: Todo取得
     
@@ -89,7 +92,7 @@ final class ToDoModel: Object {
         toDoModel.deadlineTime = todo.deadlineTime
         toDoModel.detail = todo.detail
         toDoModel.completionFlag = CompletionFlag.unfinished.rawValue
-        toDoModel.createTime = Format.stringFromDate(date: Date(), addSec: true)
+        toDoModel.updated_at = DateFormatter.stringFromDate(date: Date(), type: .secnd)
         
         do {
             try realm.write() {

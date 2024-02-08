@@ -22,7 +22,7 @@ struct TodoListViewModel {
         case .unfinished:
             model.accept(_model.filter({ $0.completionFlag == CompletionFlag.unfinished.rawValue }))
         case .expired:
-            model.accept(_model.filter({ $0.completionFlag == CompletionFlag.unfinished.rawValue &&  Format.dateFromString(string: $0.deadlineTime) ?? Date() < Format.dateFormat() }))
+            model.accept(_model.filter({ $0.completionFlag == CompletionFlag.unfinished.rawValue && DateFormatter.dateFromString(string: $0.deadlineTime, type: .secnd) ?? Date() < DateFormatter.dateFormatNow(type: .secnd) }))
         case .completion:
             model.accept(_model.filter({ $0.completionFlag == CompletionFlag.completion.rawValue }))
         }

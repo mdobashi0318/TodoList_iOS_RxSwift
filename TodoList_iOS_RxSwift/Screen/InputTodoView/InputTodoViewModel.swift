@@ -19,14 +19,14 @@ enum ErrorType: CaseIterable {
 
 struct InputTodoViewModel {
     
-    let model = BehaviorRelay(value: ToDoModel())
+    let model = BehaviorRelay(value: TodoModel())
     
     let title = BehaviorRelay(value: "")
     let date = BehaviorRelay(value: Date())
     let details = BehaviorRelay(value: "")
     
     func find(id: String) {
-        guard let _model = ToDoModel.find(id: id) else {
+        guard let _model = TodoModel.find(id: id) else {
             return
         }
         model.accept(_model)
@@ -40,7 +40,7 @@ struct InputTodoViewModel {
         }
         
         let now = DateFormatter.stringFromDate(date: Date(), type: .secnd)
-        let model = ToDoModel()
+        let model = TodoModel()
         model.title = title.value
         model.detail = details.value
         model.deadlineTime = DateFormatter.stringFromDate(date: date.value, type: .dateTime)
@@ -48,7 +48,7 @@ struct InputTodoViewModel {
         model.updated_at = now
         
         do {
-            try ToDoModel.add(model)
+            try TodoModel.add(model)
             success()
         } catch {
             failure(.DB)
@@ -62,7 +62,7 @@ struct InputTodoViewModel {
             return
         }
         
-        let model = ToDoModel()
+        let model = TodoModel()
         model.id = self.model.value.id
         model.title = title.value
         model.detail = details.value
@@ -70,7 +70,7 @@ struct InputTodoViewModel {
         model.updated_at = DateFormatter.stringFromDate(date: Date(), type: .secnd)
         
         do {
-            try ToDoModel.update(model)
+            try TodoModel.update(model)
             success()
         } catch {
             failure(.DB)

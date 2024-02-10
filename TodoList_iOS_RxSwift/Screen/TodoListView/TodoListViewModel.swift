@@ -12,35 +12,47 @@ import RxCocoa
 
 struct TodoListViewModel {
     
-    let model = BehaviorRelay<[ToDoModel]>(value: [])
+    let model = BehaviorRelay<[TodoModel]>(value: [])
     
     var page: CompletionFlag = .unfinished
     
-    func findList() {
-        let _model = ToDoModel.allFindTodo()
-        switch page {
-        case .unfinished:
-            model.accept(_model.filter({ $0.completionFlag == CompletionFlag.unfinished.rawValue }))
-        case .expired:
-            model.accept(_model.filter({ $0.completionFlag == CompletionFlag.unfinished.rawValue && DateFormatter.dateFromString(string: $0.deadlineTime, type: .secnd) ?? Date() < DateFormatter.dateFormatNow(type: .secnd) }))
-        case .completion:
-            model.accept(_model.filter({ $0.completionFlag == CompletionFlag.completion.rawValue }))
+    private let disposeBag = DisposeBag()
+    
+    func findList() -> Completable {
+        Completable.create { completable in
+            TodoModel.allFindTodo()
+                .subscribe(onNext: { response in
+                    model.accept(response)
+                    /*
+                    switch page {
+                    case .unfinished:
+                        model.accept(response.filter({ $0.completionFlag == CompletionFlag.unfinished.rawValue }))
+                    case .expired:
+                        model.accept(response.filter({ $0.completionFlag == CompletionFlag.unfinished.rawValue && DateFormatter.dateFromString(string: $0.deadlineTime, type: .secnd) ?? Date() < DateFormatter.dateFormatNow(type: .secnd) }))
+                    case .completion:
+                        model.accept(response.filter({ $0.completionFlag == CompletionFlag.completion.rawValue }))
+                    }
+                    */
+                })
+                .disposed(by: disposeBag)
+            completable(.completed)
+            return Disposables.create()
         }
-        
-        
+ 
     }
     
-    func deleteAll(success: @escaping () -> Void, failure: @escaping () -> Void)  {
-        
-        do {
-            try ToDoModel.deleteAll()
-            model.accept([])
-            success()
-        } catch {
-            failure()
+    
+    func deleteAll() -> Completable {
+        Completable.create { completable in
+            do {
+                try TodoModel.deleteAll()
+                model.accept([])
+                completable(.completed)
+            } catch {
+                completable(.error(error))
+            }
+            return Disposables.create()
         }
-        
-        
     }
     
 }

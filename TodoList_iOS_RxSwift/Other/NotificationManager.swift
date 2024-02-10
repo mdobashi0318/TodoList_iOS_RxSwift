@@ -31,7 +31,7 @@ struct NotificationManager {
     /// - Parameters:
     ///   - toDoModel: ToDoModels
     ///   - isRequestResponse: 通知の登録に成功したかを返す
-    func addNotification(toDoModel: ToDoModel, isRequestResponse: @escaping(Bool) -> ()) {
+    func addNotification(toDoModel: TodoModel, isRequestResponse: @escaping(Bool) -> ()) {
         
         let content:UNMutableNotificationContent = UNMutableNotificationContent()
         content.title = toDoModel.title

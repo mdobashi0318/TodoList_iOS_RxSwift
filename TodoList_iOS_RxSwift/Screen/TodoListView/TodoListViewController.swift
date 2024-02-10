@@ -39,15 +39,15 @@ class TodoListViewController: UIViewController {
         super.viewWillAppear(animated)
         
         viewModel.findList()
-        viewModel.model.subscribe(onNext: { [weak self] model in
-            guard let self else { return }
-            if model.isEmpty {
-                self.noTodoView.isHidden = false
-            } else {
-                self.noTodoView.isHidden = true
+            .subscribe { [weak self] model in
+                guard let self else { return }
+                if self.viewModel.model.value.isEmpty {
+                    self.noTodoView.isHidden = false
+                } else {
+                    self.noTodoView.isHidden = true
+                }
             }
-        })
-        .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
     
     
@@ -63,7 +63,7 @@ class TodoListViewController: UIViewController {
         .disposed(by: disposeBag)
         
         // セルタップ
-        tableView.rx.modelSelected(ToDoModel.self).subscribe(onNext: { [weak self] model in
+        tableView.rx.modelSelected(TodoModel.self).subscribe(onNext: { [weak self] model in
             let vc = TodoDetailViewController()
             vc.id = model.id
             self?.navigationController?.pushViewController(vc, animated: true)

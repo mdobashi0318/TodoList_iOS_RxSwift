@@ -11,7 +11,7 @@ import RxCocoa
 
 struct TodoDetailViewModel {
     
-    var model =  BehaviorRelay<ToDoModel>(value: ToDoModel())
+    var model =  BehaviorRelay<TodoModel>(value: TodoModel())
     
     
     var id: String {
@@ -21,18 +21,18 @@ struct TodoDetailViewModel {
     }
     
     func find(_ id: String) {
-        guard let _model = ToDoModel.find(id: id) else { return }
+        guard let _model = TodoModel.find(id: id) else { return }
         model.accept(_model)
     }
     
     
     func updateCompleteFlag(flag: Bool) {
-        ToDoModel.updateCompletionFlag(id: id, flag: flag ? CompletionFlag.completion : CompletionFlag.unfinished)
+        TodoModel.updateCompletionFlag(id: id, flag: flag ? CompletionFlag.completion : CompletionFlag.unfinished)
     }
     
     func delete(id: String, success: @escaping () -> Void, failure: @escaping () -> Void)  {
         do {
-            try ToDoModel.delete(id: id)
+            try TodoModel.delete(id: id)
             success()
         } catch {
             failure()

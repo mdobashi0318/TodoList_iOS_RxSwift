@@ -50,15 +50,18 @@ class PageViewController: UIPageViewController {
                 return
             }
             AlertManager.showAlert(self, type: .confirm, message: "Todoを全件削除しますか?", didTapPositiveButton: { _ in
-                self.currentVC.viewModel.deleteAll(success: {
-                    AlertManager.showAlert(self, type: .close, message: "全件削除しました", didTapPositiveButton: { _ in
-                        self.currentVC.tableView.reloadData()
+                self.currentVC.viewModel
+                    .deleteAll()
+                    .subscribe(onCompleted: {
+                        AlertManager.showAlert(self, type: .close, message: "全件削除しました", didTapPositiveButton: { _ in
+                            self.currentVC.tableView.reloadData()
+                        })
+                    }, onError: { _ in
+                        AlertManager.showAlert(self, type: .close, message: "削除に失敗しました")
                     })
-                }, failure: {
-                    AlertManager.showAlert(self, type: .close, message: "削除に失敗しました")
-                })
+                    .disposed(by: self.disposeBag)
+                
             })
-            
         })
         .disposed(by: disposeBag)
     }

@@ -26,6 +26,6 @@ struct TodoModelError: Error {
 // MARK: DeleteError
 
 struct DeleteError: Error {
-    var model: ToDoModel
+    var model: TodoModel
     var message: String
 }

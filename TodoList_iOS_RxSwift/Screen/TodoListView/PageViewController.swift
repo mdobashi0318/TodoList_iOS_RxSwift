@@ -24,6 +24,7 @@ class PageViewController: UIPageViewController {
         super.viewDidLoad()
         initNavigationItem()
         dataSource = self
+        view.backgroundColor = currentVC.view.backgroundColor
         setViewControllers([currentVC], direction: .forward, animated: true)
     }
     
@@ -77,7 +78,7 @@ extension PageViewController: UIPageViewControllerDataSource {
             return nil
         }
 
-        switch vc.viewModel.page {
+        switch vc.viewModel.page.value {
         case .expired:
             currentVC = TodoListViewController(page: .unfinished)
         case .completion:
@@ -93,7 +94,7 @@ extension PageViewController: UIPageViewControllerDataSource {
             return nil
         }
 
-        switch vc.viewModel.page {
+        switch vc.viewModel.page.value {
         case .unfinished:
             currentVC = TodoListViewController(page: .expired)
         case .expired:

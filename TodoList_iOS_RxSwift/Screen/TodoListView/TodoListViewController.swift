@@ -23,7 +23,7 @@ class TodoListViewController: UIViewController {
     
     convenience init(page: CompletionFlag) {
         self.init()
-        self.viewModel.page = page
+        self.viewModel.page.accept(page)
     }
     
     override func viewDidLoad() {
@@ -43,8 +43,10 @@ class TodoListViewController: UIViewController {
                 guard let self else { return }
                 if self.viewModel.model.value.isEmpty {
                     self.noTodoView.isHidden = false
+                    self.tableView.isScrollEnabled = false
                 } else {
                     self.noTodoView.isHidden = true
+                    self.tableView.isScrollEnabled = true
                 }
             }
             .disposed(by: disposeBag)
@@ -74,6 +76,22 @@ class TodoListViewController: UIViewController {
         // 選択状態のハイライト解除
         tableView.rx.itemSelected.subscribe(onNext: { [weak self] indexPath in
             self?.tableView.deselectRow(at: indexPath, animated: true)
+        })
+        .disposed(by: disposeBag)
+        
+        
+        viewModel.page.subscribe(onNext: { page in
+            let headerView = UIView(frame: CGRect(x: 10, y: 0, width: 0, height: 0))
+            let label = UILabel(frame: CGRect(x: 10, y: 0, width: 0, height: 0))
+            label.text = switch page {
+            case .unfinished: "未完了"
+            case .completion: "完了"
+            case .expired: "期限切れ"
+            }
+            headerView.addSubview(label)
+            label.sizeToFit()
+            self.tableView.tableHeaderView = headerView
+            headerView.bounds.size = CGSize(width: label.bounds.width, height: 10)
         })
         .disposed(by: disposeBag)
         

@@ -14,7 +14,7 @@ struct TodoListViewModel {
     
     let model = BehaviorRelay<[TodoModel]>(value: [])
     
-    var page: CompletionFlag = .unfinished
+    let page = BehaviorRelay<CompletionFlag>(value: .unfinished)
     
     private let disposeBag = DisposeBag()
     
@@ -22,17 +22,15 @@ struct TodoListViewModel {
         Completable.create { completable in
             TodoModel.allFindTodo()
                 .subscribe(onNext: { response in
-                    model.accept(response)
-                    /*
-                    switch page {
+                    switch page.value {
                     case .unfinished:
-                        model.accept(response.filter({ $0.completionFlag == CompletionFlag.unfinished.rawValue }))
+                        model.accept(response.filter({ $0.completionFlag == CompletionFlag.unfinished.rawValue && DateFormatter.dateFromString(string: $0.deadlineTime, type: .dateTime) ?? Date() >= DateFormatter.dateFormatNow(type: .dateTime) }))
                     case .expired:
-                        model.accept(response.filter({ $0.completionFlag == CompletionFlag.unfinished.rawValue && DateFormatter.dateFromString(string: $0.deadlineTime, type: .secnd) ?? Date() < DateFormatter.dateFormatNow(type: .secnd) }))
+                        model.accept(response.filter({ $0.completionFlag == CompletionFlag.unfinished.rawValue && DateFormatter.dateFromString(string: $0.deadlineTime, type: .dateTime) ?? Date() < DateFormatter.dateFormatNow(type: .dateTime) }))
                     case .completion:
                         model.accept(response.filter({ $0.completionFlag == CompletionFlag.completion.rawValue }))
                     }
-                    */
+                    
                 })
                 .disposed(by: disposeBag)
             completable(.completed)

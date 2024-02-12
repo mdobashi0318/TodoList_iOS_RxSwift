@@ -81,17 +81,15 @@ class TodoListViewController: UIViewController {
         
         
         viewModel.page.subscribe(onNext: { page in
-            let headerView = UIView(frame: CGRect(x: 10, y: 0, width: 0, height: 0))
-            let label = UILabel(frame: CGRect(x: 10, y: 0, width: 0, height: 0))
-            label.text = switch page {
+            let headerView = SectionHeaderView()
+            headerView.label.text = switch page {
             case .unfinished: "未完了"
             case .completion: "完了"
             case .expired: "期限切れ"
             }
-            headerView.addSubview(label)
-            label.sizeToFit()
+            headerView.label.sizeToFit()
             self.tableView.tableHeaderView = headerView
-            headerView.bounds.size = CGSize(width: label.bounds.width, height: 10)
+            headerView.bounds.size = CGSize(width: headerView.label.bounds.width, height: 40)
         })
         .disposed(by: disposeBag)
         

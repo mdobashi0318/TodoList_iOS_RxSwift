@@ -26,7 +26,7 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Todoがありません" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="myg-2i-Twc">
-                    <rect key="frame" x="17" y="69" width="376" height="50"/>
+                    <rect key="frame" x="17" y="99" width="376" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="s69-Qt-hdZ"/>
                     </constraints>
@@ -38,7 +38,7 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="myg-2i-Twc" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="Kho-Cg-uYZ"/>
+                <constraint firstItem="myg-2i-Twc" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="Kho-Cg-uYZ"/>
                 <constraint firstItem="WXL-Wk-XcB" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Lwi-pa-4fy"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="WXL-Wk-XcB" secondAttribute="bottom" id="d8S-jX-ncV"/>
                 <constraint firstItem="WXL-Wk-XcB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="eql-h0-upg"/>

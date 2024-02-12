@@ -26,12 +26,7 @@ class InputTodoViewController: UIViewController {
     
     private let closeButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: nil, action: nil)
     
-    
-    @IBOutlet weak var titleTextField: UITextField!
-    
-    @IBOutlet weak var datePicker: UIDatePicker!
-    
-    @IBOutlet weak var detailTextView: UITextView!
+    @IBOutlet weak var tableView: UITableView!
     
     
     var mode: Mode = .Add
@@ -46,10 +41,17 @@ class InputTodoViewController: UIViewController {
         }
         
         initNavigationItem()
-        initTextEvent()
+        initTableView()
         
     }
     
+    private func initTableView() {
+        tableView.dataSource = self
+        tableView.register(UINib(nibName: "TextFieldCell", bundle: nil), forCellReuseIdentifier: "TextFieldCell")
+        tableView.register(UINib(nibName: "DatePickerCell", bundle: nil), forCellReuseIdentifier: "DatePickerCell")
+        tableView.register(UINib(nibName: "TextViewCell", bundle: nil), forCellReuseIdentifier: "TextViewCell")
+        
+    }
     
     
     private func initNavigationItem() {
@@ -80,41 +82,6 @@ class InputTodoViewController: UIViewController {
             self.dismiss(animated: true)
         })
         .disposed(by: disposeBag)
-    }
-    
-    
-    private func initTextEvent() {
-        
-        titleTextField.rx.text.subscribe(onNext: { text in
-            self.viewModel.title.accept(text ?? "")
-        })
-        .disposed(by: disposeBag)
-        
-        
-        datePicker.minimumDate = Calendar.current.date(byAdding: .minute, value: 1, to: Date()) ?? Date()
-        datePicker.rx.date.changed.subscribe(onNext: { date in
-            self.viewModel.date.accept(date)
-        })
-        .disposed(by: disposeBag)
-        
-        
-        detailTextView.rx.text.subscribe(onNext: { text in
-            self.viewModel.details.accept(text ?? "")
-            
-        })
-        .disposed(by: disposeBag)
-        
-        
-        
-        viewModel.model.bind(to: { model in
-            titleTextField.text = model.value.title
-            datePicker.date = DateFormatter.dateFromString(string: model.value.deadlineTime, type: .dateTime) ?? Date()
-            detailTextView.text = model.value.detail
-            
-            self.viewModel.title.accept(model.value.title)
-            self.viewModel.date.accept(DateFormatter.dateFromString(string: model.value.deadlineTime, type: .dateTime) ?? Date())
-            self.viewModel.details.accept(model.value.detail)
-        })
     }
     
     
@@ -158,4 +125,87 @@ class InputTodoViewController: UIViewController {
             }
         })
     }
+}
+
+
+
+extension InputTodoViewController:  UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
+    }
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        TableRow.allCases.count - 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        switch indexPath.section {
+        case TableRow.title.rawValue:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell") as? TextFieldCell else {
+                return UITableViewCell()
+            }
+            cell.textField.rx.text
+                .orEmpty
+                .bind(to: viewModel.title)
+                .disposed(by: disposeBag)
+            return cell
+            
+        case TableRow.dateTime.rawValue:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "DatePickerCell") as? DatePickerCell else {
+                return UITableViewCell()
+            }
+            cell.datePicker.minimumDate = Calendar.current.date(byAdding: .minute, value: 1, to: Date())
+            cell.datePicker.rx.date
+                .bind(to: viewModel.date)
+                .disposed(by: disposeBag)
+            return cell
+            
+        case TableRow.detail.rawValue:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewCell") as? TextViewCell else {
+                return UITableViewCell()
+            }
+            cell.textView.rx.text
+                .orEmpty
+                .subscribe(onNext: { [weak self] text in
+                    guard let self else { return }
+                    self.viewModel.details.accept(text)
+                    tableView.beginUpdates()
+                    cell.textView.sizeToFit()
+                    cell.height.constant = cell.textView.bounds.height
+                    tableView.endUpdates()
+                })
+                .disposed(by: disposeBag)
+            return cell
+        case TableRow.complete.rawValue:
+            break
+        default:
+            return UITableViewCell()
+        }
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return switch section {
+        case TableRow.title.rawValue:
+            "タイトル"
+        case TableRow.dateTime.rawValue:
+            "期限"
+        case TableRow.detail.rawValue:
+            "詳細"
+        case TableRow.complete.rawValue:
+            nil
+        default:
+            nil
+        }
+    }
+    
+}
+
+
+
+enum TableRow: Int, CaseIterable {
+    case title, dateTime, detail, complete
 }

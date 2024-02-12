@@ -12,6 +12,7 @@ import Foundation
 struct TodoModelError: Error {
     var isError: Bool = false
     var message: String = ""
+    var errorType: ErrorType = .Other
     
     init(isError: Bool) {
         self.isError = isError
@@ -19,6 +20,15 @@ struct TodoModelError: Error {
     
     init(message: String) {
         self.message = message
+    }
+    
+    init(errorType: ErrorType) {
+        self.errorType = errorType
+    }
+    
+    enum ErrorType: CaseIterable {
+        case DB
+        case Other
     }
 }
 

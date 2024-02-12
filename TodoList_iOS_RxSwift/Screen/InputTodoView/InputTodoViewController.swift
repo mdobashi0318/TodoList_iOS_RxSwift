@@ -38,6 +38,10 @@ class InputTodoViewController: UIViewController {
         
         if let id {
             viewModel.find(id: id)
+            viewModel.model.asDriver()
+                .drive(onNext: { model in
+                })
+                .disposed(by: disposeBag)
         }
         
         initNavigationItem()
@@ -87,43 +91,57 @@ class InputTodoViewController: UIViewController {
     
     
     private func add() {
-        viewModel.add(success: {
-            AlertManager.showAlert(self, type: .close, message: "Todoを登録しました", didTapPositiveButton: { _ in
-                self.dismiss(animated: true)
-            })
-        }, failure: { type in
-            switch type {
-            case .DB:
-                AlertManager.showAlert(self, type: .close, message: "Todoを登録に失敗しました。")
-            case .Other:
-                if self.viewModel.title.value.isEmpty {
-                    AlertManager.showAlert(self, type: .close, message: "タイトルを入力してください")
-                } else {
-                    AlertManager.showAlert(self, type: .close, message: "詳細を入力してください")
+        viewModel.add()
+            .subscribe(onCompleted: {
+                AlertManager.showAlert(self, type: .close, message: "Todoを登録しました", didTapPositiveButton: { _ in
+                    self.dismiss(animated: true)
+                })
+            }, onError: { error in
+                guard let error = error as? TodoModelError else {
+                    AlertManager.showAlert(self, type: .close, message: "Todoを登録に失敗しました。")
+                    return
                 }
-            }
-        })
+                switch error.errorType {
+                case .DB:
+                    AlertManager.showAlert(self, type: .close, message: "Todoを登録に失敗しました。")
+                case .Other:
+                    if self.viewModel.title.value.isEmpty {
+                        AlertManager.showAlert(self, type: .close, message: "タイトルを入力してください")
+                    } else {
+                        AlertManager.showAlert(self, type: .close, message: "詳細を入力してください")
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
+        
+
     }
     
     
     private func update() {
-        viewModel.update(success: {
-            AlertManager.showAlert(self, type: .close, message: "Todoを更新しました", didTapPositiveButton: { _ in
-                NotificationCenter.default.post(name: Notification.Name(UPDATE_DETAIL), object: nil)
-                self.dismiss(animated: true)
-            })
-        }, failure: { type in
-            switch type {
-            case .DB:
-                AlertManager.showAlert(self, type: .close, message: "Todoを更新に失敗しました。")
-            case .Other:
-                if self.viewModel.title.value.isEmpty {
-                    AlertManager.showAlert(self, type: .close, message: "タイトルを入力してください")
-                } else {
-                    AlertManager.showAlert(self, type: .close, message: "詳細を入力してください")
+        viewModel.update()
+            .subscribe(onCompleted: {
+                AlertManager.showAlert(self, type: .close, message: "Todoを更新しました", didTapPositiveButton: { _ in
+                    NotificationCenter.default.post(name: Notification.Name(UPDATE_DETAIL), object: nil)
+                    self.dismiss(animated: true)
+                })
+            }, onError: { error in
+                guard let error = error as? TodoModelError else {
+                    AlertManager.showAlert(self, type: .close, message: "Todoを更新に失敗しました。")
+                    return
                 }
-            }
-        })
+                switch error.errorType {
+                case .DB:
+                    AlertManager.showAlert(self, type: .close, message: "Todoを更新に失敗しました。")
+                case .Other:
+                    if self.viewModel.title.value.isEmpty {
+                        AlertManager.showAlert(self, type: .close, message: "タイトルを入力してください")
+                    } else {
+                        AlertManager.showAlert(self, type: .close, message: "詳細を入力してください")
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -147,6 +165,11 @@ extension InputTodoViewController:  UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell") as? TextFieldCell else {
                 return UITableViewCell()
             }
+            
+            viewModel.title
+                .bind(to: cell.textField.rx.text)
+                .disposed(by: disposeBag)
+            
             cell.textField.rx.text
                 .orEmpty
                 .bind(to: viewModel.title)
@@ -158,6 +181,11 @@ extension InputTodoViewController:  UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.datePicker.minimumDate = Calendar.current.date(byAdding: .minute, value: 1, to: Date())
+            
+            viewModel.date
+                .bind(to: cell.datePicker.rx.date)
+                .disposed(by: disposeBag)
+            
             cell.datePicker.rx.date
                 .bind(to: viewModel.date)
                 .disposed(by: disposeBag)
@@ -167,6 +195,11 @@ extension InputTodoViewController:  UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewCell") as? TextViewCell else {
                 return UITableViewCell()
             }
+            
+            viewModel.details
+                .bind(to: cell.textView.rx.text)
+                .disposed(by: disposeBag)
+            
             cell.textView.rx.text
                 .orEmpty
                 .subscribe(onNext: { [weak self] text in

@@ -32,8 +32,7 @@ class TodoDetailViewController: UIViewController {
         super.viewDidLoad()
         
         initNavigationItem()
-        viewModel.find(id)
-
+        findTodo()
         viewModel.model.subscribe(onNext: { [weak self] model in
             guard let self else { return }
             self.titleLabel.text = model.title
@@ -43,11 +42,10 @@ class TodoDetailViewController: UIViewController {
         })
         .disposed(by: disposeBag)
         
-        
         NotificationCenter.default.rx.notification(Notification.Name(rawValue: UPDATE_DETAIL))
             .subscribe { [weak self] _ in
                 guard let self else { return }
-                viewModel.find(id)
+                self.findTodo()
             }
             .disposed(by: disposeBag)
         
@@ -93,4 +91,23 @@ class TodoDetailViewController: UIViewController {
     }
     
 
+    private func findTodo() {
+        viewModel.find(id)
+            .subscribe(onError: { [weak self] error in
+                guard let self else {
+                    return
+                }
+                if let error = error as? TodoModelError {
+                    AlertManager.showAlert(self, type: .close, message: error.message, didTapPositiveButton: { _ in
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                } else {
+                    AlertManager.showAlert(self, type: .close, message: "システムエラーが発生しました", didTapPositiveButton: { _ in
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
 }

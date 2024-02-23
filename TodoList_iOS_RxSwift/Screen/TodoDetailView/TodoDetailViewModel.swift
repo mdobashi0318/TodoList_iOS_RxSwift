@@ -20,9 +20,18 @@ struct TodoDetailViewModel {
         }
     }
     
-    func find(_ id: String) {
-        guard let _model = TodoModel.find(id: id) else { return }
-        model.accept(_model)
+    func find(_ id: String) -> Completable {
+        return Completable.create { completable in
+            guard let _model = TodoModel.find(id: id) else {
+                completable(.error(TodoModelError(message: "Todoが見つかりませんでした")))
+                return Disposables.create()
+            }
+            model.accept(_model)
+            completable(.completed)
+               
+            return Disposables.create()
+        }
+        
     }
     
     

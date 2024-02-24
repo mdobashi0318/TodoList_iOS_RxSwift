@@ -36,14 +36,7 @@ class InputTodoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let id {
-            viewModel.find(id: id)
-            viewModel.model.asDriver()
-                .drive(onNext: { model in
-                })
-                .disposed(by: disposeBag)
-        }
-        
+        findTodo()
         initNavigationItem()
         initTableView()
         
@@ -88,6 +81,27 @@ class InputTodoViewController: UIViewController {
         .disposed(by: disposeBag)
     }
     
+    
+    private func findTodo() {
+        if let id {
+            viewModel.find(id: id)
+                .subscribe(onError: { [weak self] error in
+                    guard let self else {
+                        return
+                    }
+                    if let error = error as? TodoModelError {
+                        AlertManager.showAlert(self, type: .close, message: error.message, didTapPositiveButton: { _ in
+                            self.navigationController?.dismiss(animated: true)
+                        })
+                    } else {
+                        AlertManager.showAlert(self, type: .close, message: "システムエラーが発生しました", didTapPositiveButton: { _ in
+                            self.navigationController?.dismiss(animated: true)
+                        })
+                    }
+                })
+                .disposed(by: disposeBag)
+        }
+    }
     
     
     private func add() {

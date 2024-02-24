@@ -37,14 +37,20 @@ struct InputTodoViewModel {
     }
     
     
-    func find(id: String)  {
-        guard let _model = TodoModel.find(id: id) else {
-            return
+    func find(id: String) -> Completable {
+        return Completable.create { completable in
+            guard let _model = TodoModel.find(id: id) else {
+                completable(.error(TodoModelError(message: "Todoが見つかりませんでした。")))
+                return Disposables.create()
+            }
+            model.accept(_model)
+            title.accept(model.value.title)
+            date.accept(DateFormatter.dateFromString(string: model.value.deadlineTime, type: .dateTime) ?? Date())
+            details.accept(model.value.detail)
+            
+            return Disposables.create()
         }
-        model.accept(_model)
-        title.accept(model.value.title)
-        date.accept(DateFormatter.dateFromString(string: model.value.deadlineTime, type: .dateTime) ?? Date())
-        details.accept(model.value.detail)
+
     }
     
     

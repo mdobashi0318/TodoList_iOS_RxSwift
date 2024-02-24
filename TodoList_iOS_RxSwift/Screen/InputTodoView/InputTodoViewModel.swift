@@ -18,6 +18,25 @@ struct InputTodoViewModel {
     let date = BehaviorRelay(value: Date())
     let details = BehaviorRelay(value: "")
     
+    private let isValidation = BehaviorRelay(value: false)
+    
+    private let disposeBag = DisposeBag()
+    
+    init() {
+        validation()
+    }
+    
+    private func validation() {
+        Observable
+            .combineLatest(title, details)
+            .map({ title, details -> Bool in
+                !title.isEmpty && !details.isEmpty
+            })
+            .bind(to: isValidation)
+            .disposed(by: disposeBag)
+    }
+    
+    
     func find(id: String)  {
         guard let _model = TodoModel.find(id: id) else {
             return
@@ -32,7 +51,7 @@ struct InputTodoViewModel {
     func add() -> Completable {
         return Completable.create { completable in
             
-            if title.value.isEmpty || details.value.isEmpty {
+            if !isValidation.value {
                 completable(.error(TodoModelError(errorType: .Other)))
                 return Disposables.create()
             }
@@ -58,7 +77,7 @@ struct InputTodoViewModel {
     
     func update() -> Completable {
         return Completable.create { completable in
-            if title.value.isEmpty || details.value.isEmpty {
+            if !isValidation.value {
                 completable(.error(TodoModelError(errorType: .Other)))
                 return Disposables.create()
             }

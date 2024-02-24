@@ -26,6 +26,7 @@ class PageViewController: UIPageViewController {
         dataSource = self
         view.backgroundColor = currentVC.view.backgroundColor
         setViewControllers([currentVC], direction: .forward, animated: true)
+        receiveTapNotification()
     }
     
     
@@ -65,6 +66,22 @@ class PageViewController: UIPageViewController {
             })
         })
         .disposed(by: disposeBag)
+    }
+    
+    private func receiveTapNotification() {
+        NotificationCenter.default.rx
+            .notification(Notification.Name(rawValue: "tapNotificationBanner"))
+            .subscribe { [weak self] notification in
+                guard let self else { return }
+                let vc = TodoDetailViewController()
+                guard let id = notification.element?.object as? String else {
+                    AlertManager.showAlert(self, type: .close, message: "Todoが見つかりませんでした。")
+                    return
+                }
+                vc.id = id
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 
 }

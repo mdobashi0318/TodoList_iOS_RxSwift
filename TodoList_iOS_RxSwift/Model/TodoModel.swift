@@ -185,11 +185,10 @@ final class TodoModel {
     ///   - result: Todoの登録時の成功すればVoid、またはエラーを返す
     static func delete(id: String) throws {
         guard let realm = RealmTodoModel.realm,
-        let model = find(id: id) else {
+              let reamlModel = RealmTodoModel.find(id: id) else {
             throw TodoModelError(message: "削除エラー")
         }
         
-        let reamlModel = RealmTodoModel.map(model)
         do {
             try realm.write() {
                 realm.delete(reamlModel)

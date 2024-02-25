@@ -42,7 +42,7 @@ class TodoDetailViewController: UIViewController {
         })
         .disposed(by: disposeBag)
         
-        NotificationCenter.default.rx.notification(Notification.Name(rawValue: UPDATE_DETAIL))
+        NotificationCenter.default.rx.notification(.update_detail)
             .subscribe { [weak self] _ in
                 guard let self else { return }
                 self.findTodo()

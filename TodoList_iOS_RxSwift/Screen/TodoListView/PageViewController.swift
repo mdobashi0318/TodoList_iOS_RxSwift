@@ -70,7 +70,7 @@ class PageViewController: UIPageViewController {
     
     private func receiveTapNotification() {
         NotificationCenter.default.rx
-            .notification(Notification.Name(rawValue: "tapNotificationBanner"))
+            .notification(.tap_notification)
             .subscribe { [weak self] notification in
                 guard let self else { return }
                 let vc = TodoDetailViewController()

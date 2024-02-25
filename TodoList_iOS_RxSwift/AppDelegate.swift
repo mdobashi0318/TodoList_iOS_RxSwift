@@ -65,7 +65,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     /// 通知バナータップ
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "tapNotificationBanner"), object: response.notification.request.identifier)
+            NotificationCenter.default.post(name: .tap_notification, object: response.notification.request.identifier)
         }
         completionHandler()
     }

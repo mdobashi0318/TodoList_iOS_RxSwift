@@ -136,7 +136,7 @@ class InputTodoViewController: UIViewController {
         viewModel.update()
             .subscribe(onCompleted: {
                 AlertManager.showAlert(self, type: .close, message: "Todoを更新しました", didTapPositiveButton: { _ in
-                    NotificationCenter.default.post(name: Notification.Name(UPDATE_DETAIL), object: nil)
+                    NotificationCenter.default.post(name: .update_detail, object: nil)
                     self.dismiss(animated: true)
                 })
             }, onError: { error in

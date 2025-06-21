@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+@MainActor 
 struct AlertManager {
 
     enum AlertType: CaseIterable {

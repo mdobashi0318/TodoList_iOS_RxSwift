@@ -238,7 +238,7 @@ final class TodoModel {
 
 final class RealmTodoModel: Object {
     
-    static let realm: Realm? = {
+    nonisolated(unsafe) static let realm: Realm? = {
         var configuration: Realm.Configuration
         configuration = Realm.Configuration()
         configuration.schemaVersion = UInt64(1)

@@ -36,6 +36,7 @@ targets:
          CURRENT_PROJECT_VERSIO: 1
          PRODUCT_BUNDLE_IDENTIFIER: "masaharu.dobashi.TodoList-iOS-RxSwift"
          PRODUCT_NAME: "$(TARGET_NAME)"
+         SWIFT_VERSION: 6
     options:
         developmentLanguage: ja
     dependencies:
@@ -47,13 +48,13 @@ targets:
 packages:
  XcodeGen:
     url: https://github.com/yonaskolb/XcodeGen
-    version: 2.37.0
+    version: 2.43.0
  Realm:
     url: https://github.com/realm/realm-swift
-    version: 10.43.1
+    version: 20.0.3
  RxSwift:
     url: https://github.com/ReactiveX/RxSwift
-    version: 6.6.0
+    version: 6.9.0
 
 schemes:
    TodoList_iOS_RxSwift:

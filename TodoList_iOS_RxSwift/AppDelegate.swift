@@ -39,14 +39,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 // MARK: - UNUserNotificationCenterDelegate
 
-extension AppDelegate: UNUserNotificationCenterDelegate {
+extension AppDelegate: @preconcurrency UNUserNotificationCenterDelegate {
     
     
     /// UNUserNotificationCenterのユーザー認証
     private func requestAuthorization() {
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
-            center.delegate = self
+        Task {
+            let center = UNUserNotificationCenter.current()
+            do {
+                if try await center.requestAuthorization(options: [.alert, .sound, .badge]) == true {
+                    center.delegate = self
+                    print("center.requestAuthorization: success")
+                } else {
+                    print("center.requestAuthorization: fail")
+                }
+            } catch {
+                print("center.requestAuthorization: Error")
+            }
         }
     }
     

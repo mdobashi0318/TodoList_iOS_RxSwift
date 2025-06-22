@@ -19,11 +19,7 @@ class TodoListViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     @IBOutlet weak var noTodoView: UIView!
-    
-    var page: CompletionFlag {
-        viewModel.page.value
-    }
-    
+        
     convenience init(page: CompletionFlag) {
         self.init()
         self.viewModel.page.accept(page)
@@ -79,20 +75,6 @@ class TodoListViewController: UIViewController {
         // 選択状態のハイライト解除
         tableView.rx.itemSelected.subscribe(onNext: { [weak self] indexPath in
             self?.tableView.deselectRow(at: indexPath, animated: true)
-        })
-        .disposed(by: disposeBag)
-        
-        
-        viewModel.page.subscribe(onNext: { page in
-            let headerView = SectionHeaderView()
-            headerView.label.text = switch page {
-            case .unfinished: "未完了"
-            case .completion: "完了"
-            case .expired: "期限切れ"
-            }
-            headerView.label.sizeToFit()
-            self.tableView.tableHeaderView = headerView
-            headerView.bounds.size = CGSize(width: headerView.label.bounds.width, height: 40)
         })
         .disposed(by: disposeBag)
         

@@ -2,126 +2,70 @@
 //  PageViewController.swift
 //  TodoList_iOS_RxSwift
 //
-//  Created by 土橋正晴 on 2023/09/04.
+//  Created by 土橋正晴 on 2025/06/22.
 //
 
+import Foundation
 import UIKit
-import RxCocoa
-import RxSwift
+
+
+protocol PageVCDelegate: AnyObject {
+    func pageSelected(_ page: CompletionFlag)
+}
 
 class PageViewController: UIPageViewController {
     
-    var currentVC = TodoListViewController(page: .unfinished)
+    private(set) var page: CompletionFlag = .unfinished
     
-    private let disposeBag = DisposeBag()
+    weak var pageVCDelegate: PageVCDelegate?
     
-    private let addButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: nil, action: nil)
-    
-    private let deleteButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: nil, action: nil)
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        initNavigationItem()
+        
         dataSource = self
-        view.backgroundColor = currentVC.view.backgroundColor
-        setViewControllers([currentVC], direction: .forward, animated: true)
-        receiveTapNotification()
+        setViewControllers([TodoListViewController(page: .unfinished)], direction: .forward, animated: true)
+        
     }
     
-    
-    private func initNavigationItem() {
-        navigationItem.title = "TodoList"
-        navigationItem.rightBarButtonItem = addButton
-        navigationItem.leftBarButtonItem = deleteButton
-        
-        addButton.rx.tap.subscribe(onNext: { [weak self] in
-            guard let self else {
-                return
-            }
-            
-            let navi = UINavigationController(rootViewController: InputTodoViewController())
-            navi.modalPresentationStyle = .fullScreen
-            self.navigationController?.present(navi, animated: true)
-        })
-        .disposed(by: disposeBag)
-        
-        
-        deleteButton.rx.tap.subscribe(onNext: { [weak self] in
-            guard let self else {
-                return
-            }
-            AlertManager.showAlert(self, type: .confirm, message: "Todoを全件削除しますか?", didTapPositiveButton: { _ in
-                self.currentVC.viewModel
-                    .deleteAll()
-                    .subscribe(onCompleted: {
-                        AlertManager.showAlert(self, type: .close, message: "全件削除しました", didTapPositiveButton: { _ in
-                            self.currentVC.tableView.reloadData()
-                        })
-                    }, onError: { _ in
-                        AlertManager.showAlert(self, type: .close, message: "削除に失敗しました")
-                    })
-                    .disposed(by: self.disposeBag)
-                
-            })
-        })
-        .disposed(by: disposeBag)
+    func setPage(_ page: CompletionFlag) {
+        self.page = page
     }
     
-    private func receiveTapNotification() {
-        NotificationCenter.default.rx
-            .notification(.tap_notification)
-            .subscribe { [weak self] notification in
-                guard let self else { return }
-                let vc = TodoDetailViewController()
-                guard let id = notification.element?.object as? String else {
-                    AlertManager.showAlert(self, type: .close, message: "Todoが見つかりませんでした。")
-                    return
-                }
-                vc.id = id
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-            .disposed(by: disposeBag)
-    }
-
 }
 
 
+// MARK: - UIPageViewControllerDataSource
 
 extension PageViewController: UIPageViewControllerDataSource {
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let vc = viewController as? TodoListViewController else {
-            return nil
-        }
-
-        switch vc.viewModel.page.value {
+        switch page {
         case .expired:
-            currentVC = TodoListViewController(page: .unfinished)
+            page = .unfinished
+            pageVCDelegate?.pageSelected(page)
+            return TodoListViewController(page: page)
         case .completion:
-            currentVC = TodoListViewController(page: .expired)
+            page = .expired
+            pageVCDelegate?.pageSelected(page)
+            return TodoListViewController(page: page)
         default:
             return nil
         }
-        return currentVC
     }
-
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let vc = viewController as? TodoListViewController else {
-            return nil
-        }
-
-        switch vc.viewModel.page.value {
+        switch page {
         case .unfinished:
-            currentVC = TodoListViewController(page: .expired)
+            page = .expired
+            pageVCDelegate?.pageSelected(page)
+            return TodoListViewController(page: page)
         case .expired:
-            currentVC = TodoListViewController(page: .completion)
+            page = .completion
+            pageVCDelegate?.pageSelected(page)
+            return TodoListViewController(page: page)
         default:
             return nil
         }
-        return currentVC
     }
-    
-    
     
 }

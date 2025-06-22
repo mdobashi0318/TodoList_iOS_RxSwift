@@ -20,6 +20,9 @@ class TodoListViewController: UIViewController {
     
     @IBOutlet weak var noTodoView: UIView!
     
+    var page: CompletionFlag {
+        viewModel.page.value
+    }
     
     convenience init(page: CompletionFlag) {
         self.init()

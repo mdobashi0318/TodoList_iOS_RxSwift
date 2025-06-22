@@ -1,39 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bmx-Pa-LAX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="78R-hj-The">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
-        <scene sceneID="XjS-9c-A6l">
+        <!--Main View Controller-->
+        <scene sceneID="2U7-Bw-OCQ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bmx-Pa-LAX" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nZM-4C-Zdr" customClass="MainViewController" customModule="TodoList_iOS_RxSwift" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wZQ-Ms-vbj">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="tOo-9U-41X">
+                                <rect key="frame" x="0.0" y="162" width="393" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mba-Xw-N0C">
+                                        <rect key="frame" x="0.0" y="0.0" width="130.33333333333334" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="未完了"/>
+                                        <connections>
+                                            <action selector="unfinishedButtonTapped:" destination="nZM-4C-Zdr" eventType="touchUpInside" id="kyB-Qc-vv7"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Pr-ah-23h">
+                                        <rect key="frame" x="131.33333333333331" y="0.0" width="130.33333333333331" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="期限切れ"/>
+                                        <connections>
+                                            <action selector="expiredButtonTapped:" destination="nZM-4C-Zdr" eventType="touchUpInside" id="voA-2I-AV2"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8j-IS-62z">
+                                        <rect key="frame" x="262.66666666666669" y="0.0" width="130.33333333333331" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="完了"/>
+                                        <connections>
+                                            <action selector="completionButtonTapped:" destination="nZM-4C-Zdr" eventType="touchUpInside" id="cIj-XX-ip1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="tbq-OO-pj2"/>
+                                </constraints>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rvg-gK-qfp">
+                                <rect key="frame" x="0.0" y="212" width="393" height="1"/>
+                                <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="u4e-IU-jwG"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygU-ZB-wor">
+                                <rect key="frame" x="0.0" y="213" width="393" height="571"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="F2c-VZ-dmp"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="tOo-9U-41X" firstAttribute="top" secondItem="F2c-VZ-dmp" secondAttribute="top" id="5I5-Fs-EPF"/>
+                            <constraint firstItem="F2c-VZ-dmp" firstAttribute="trailing" secondItem="rvg-gK-qfp" secondAttribute="trailing" id="65P-Fc-tTN"/>
+                            <constraint firstItem="rvg-gK-qfp" firstAttribute="top" secondItem="tOo-9U-41X" secondAttribute="bottom" id="B1V-dw-Wap"/>
+                            <constraint firstItem="ygU-ZB-wor" firstAttribute="top" secondItem="rvg-gK-qfp" secondAttribute="bottom" id="CPr-BI-J2w"/>
+                            <constraint firstItem="rvg-gK-qfp" firstAttribute="leading" secondItem="F2c-VZ-dmp" secondAttribute="leading" id="WUk-T3-KDj"/>
+                            <constraint firstItem="ygU-ZB-wor" firstAttribute="leading" secondItem="F2c-VZ-dmp" secondAttribute="leading" id="YNW-Yy-WQw"/>
+                            <constraint firstItem="F2c-VZ-dmp" firstAttribute="trailing" secondItem="ygU-ZB-wor" secondAttribute="trailing" id="t1z-Z4-GMe"/>
+                            <constraint firstItem="F2c-VZ-dmp" firstAttribute="trailing" secondItem="tOo-9U-41X" secondAttribute="trailing" id="x1l-jT-ojG"/>
+                            <constraint firstItem="tOo-9U-41X" firstAttribute="leading" secondItem="F2c-VZ-dmp" secondAttribute="leading" id="xRD-Fa-8iS"/>
+                            <constraint firstItem="F2c-VZ-dmp" firstAttribute="bottom" secondItem="ygU-ZB-wor" secondAttribute="bottom" id="yLS-Sk-RtI"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="oj7-UC-w0u"/>
+                    <connections>
+                        <outlet property="completionButton" destination="J8j-IS-62z" id="5tT-Cc-gvm"/>
+                        <outlet property="expiredButton" destination="5Pr-ah-23h" id="hYE-cY-h3O"/>
+                        <outlet property="pageView" destination="ygU-ZB-wor" id="9yT-ne-FnA"/>
+                        <outlet property="unfinishedButton" destination="Mba-Xw-N0C" id="cnk-mO-1lH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sJj-6L-u0G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="969" y="-130"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Re0-kO-h5s">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="78R-hj-The" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="P6x-gl-qw6">
-                        <rect key="frame" x="0.0" y="59" width="393" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fPH-E7-ZmB">
+                        <rect key="frame" x="0.0" y="118" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="OMU-gE-HzF" kind="relationship" relationship="rootViewController" id="VLX-Kg-D10"/>
+                        <segue destination="nZM-4C-Zdr" kind="relationship" relationship="rootViewController" id="CKa-0s-1HW"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HV1-7w-I4X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0x6-Mo-a7j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-276" y="-62"/>
-        </scene>
-        <!--Page View Controller-->
-        <scene sceneID="scZ-vY-aI5">
-            <objects>
-                <pageViewController storyboardIdentifier="PageViewController.xib" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="OMU-gE-HzF" customClass="PageViewController" customModule="TodoList_iOS_RxSwift" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="Ylm-mv-QsK"/>
-                </pageViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XyB-h0-Lba" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="860" y="-670"/>
+            <point key="canvasLocation" x="46.564885496183201" y="-130.28169014084509"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiaryLabelColor">
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.29803921570000003" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

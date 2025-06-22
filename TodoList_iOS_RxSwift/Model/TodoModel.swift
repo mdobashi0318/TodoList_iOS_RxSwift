@@ -158,15 +158,16 @@ final class TodoModel {
     ///   - flag: 変更する値
     static func updateCompletionFlag(id: String, flag: CompletionFlag) {
         guard let realm = RealmTodoModel.realm,
-              let model: TodoModel = TodoModel.find(id: id)else {
+              let model: TodoModel = TodoModel.find(id: id),
+              let rModel = RealmTodoModel.find(id: id) else {
             return
         }
         
         try? realm.write() {
-            model.completionFlag = flag.rawValue
+            rModel.completionFlag = flag.rawValue
         }
-        if model.completionFlag == CompletionFlag.completion.rawValue {
-            NotificationManager().removeNotification([model.id])
+        if rModel.completionFlag == CompletionFlag.completion.rawValue {
+            NotificationManager().removeNotification([rModel.id])
         } else {
             NotificationManager().addNotification(toDoModel: model) { _ in
                 /// 何もしない

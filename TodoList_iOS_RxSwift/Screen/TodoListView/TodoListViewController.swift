@@ -14,11 +14,15 @@ class TodoListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var viewModel = TodoListViewModel()
+    let viewModel = TodoListViewModel()
     
     private let disposeBag = DisposeBag()
     
     @IBOutlet weak var noTodoView: UIView!
+    
+    var page: CompletionFlag {
+        viewModel.page.value
+    }
         
     convenience init(page: CompletionFlag) {
         self.init()

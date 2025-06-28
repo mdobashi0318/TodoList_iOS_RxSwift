@@ -124,8 +124,8 @@ class MainViewController: UIViewController {
         expiredButton.backgroundColor = deSelectButtonColor
         completionButton.backgroundColor = deSelectButtonColor
         if pageVC.page != .unfinished {
-            pageVC.setViewControllers([TodoListViewController(page: .unfinished)], direction: .reverse, animated: true)
-            pageVC.setPage(.completion)
+            pageVC.setViewControllers([pageVC.pages[0]], direction: .reverse, animated: true)
+            pageVC.setPage(.unfinished)
         }
     }
     
@@ -135,13 +135,15 @@ class MainViewController: UIViewController {
         completionButton.backgroundColor = deSelectButtonColor
         switch pageVC.page {
         case .unfinished:
-            pageVC.setViewControllers([TodoListViewController(page: .expired)], direction: .forward, animated: true)
+            pageVC.setViewControllers([pageVC.pages[1]], direction: .forward, animated: true)
+            pageVC.setPage(.expired)
         case .completion:
-            pageVC.setViewControllers([TodoListViewController(page: .expired)], direction: .reverse, animated: true)
+            pageVC.setViewControllers([pageVC.pages[1]], direction: .reverse, animated: true)
+            pageVC.setPage(.expired)
         default:
             break
         }
-        pageVC.setPage(.expired)
+        
     }
     
     @IBAction func completionButtonTapped(_ sender: UIButton) {
@@ -149,7 +151,7 @@ class MainViewController: UIViewController {
         expiredButton.backgroundColor = deSelectButtonColor
         completionButton.backgroundColor = selectButtonColor
         if pageVC.page != .completion {
-            pageVC.setViewControllers([TodoListViewController(page: .completion)], direction: .forward, animated: true)
+            pageVC.setViewControllers([pageVC.pages[2]], direction: .forward, animated: true)
             pageVC.setPage(.completion)
         }
     }

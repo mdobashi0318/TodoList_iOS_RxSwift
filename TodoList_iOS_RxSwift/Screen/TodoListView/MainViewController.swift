@@ -39,7 +39,11 @@ class MainViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var pageView: UIView!
+    @IBOutlet private weak var indicatorViewXConstraint: NSLayoutConstraint!
+    
+    @IBOutlet private weak var pageView: UIView!
+    
+    @IBOutlet private weak var indicatorView: UIView!
     
     private let selectButtonColor: UIColor = .systemBackground
     
@@ -51,6 +55,7 @@ class MainViewController: UIViewController {
         addChildVC()
         receiveTapNotification()
         pageVC.pageVCDelegate = self
+        indicatorViewXConstraint.constant = -(UIScreen.main.bounds.width / 3)
     }
     
     
@@ -126,6 +131,7 @@ class MainViewController: UIViewController {
         if pageVC.page != .unfinished {
             pageVC.setViewControllers([pageVC.pages[0]], direction: .reverse, animated: true)
             pageVC.setPage(.unfinished)
+            moveIndicator(.unfinished)
         }
     }
     
@@ -137,9 +143,11 @@ class MainViewController: UIViewController {
         case .unfinished:
             pageVC.setViewControllers([pageVC.pages[1]], direction: .forward, animated: true)
             pageVC.setPage(.expired)
+            moveIndicator(.expired)
         case .completion:
             pageVC.setViewControllers([pageVC.pages[1]], direction: .reverse, animated: true)
             pageVC.setPage(.expired)
+            moveIndicator(.expired)
         default:
             break
         }
@@ -153,7 +161,24 @@ class MainViewController: UIViewController {
         if pageVC.page != .completion {
             pageVC.setViewControllers([pageVC.pages[2]], direction: .forward, animated: true)
             pageVC.setPage(.completion)
+            moveIndicator(.completion)
         }
+    }
+    
+    @MainActor
+    private func moveIndicator(_ page: CompletionFlag) {
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            guard let self else { return }
+            switch page {
+            case .unfinished:
+                self.indicatorViewXConstraint.constant = -(UIScreen.main.bounds.width / 3)
+            case .completion:
+                self.indicatorViewXConstraint.constant = (UIScreen.main.bounds.width / 3)
+            case .expired:
+                self.indicatorViewXConstraint.constant = 0
+            }
+            self.view.layoutIfNeeded()
+        })
     }
 
 }
@@ -178,6 +203,7 @@ extension MainViewController: @preconcurrency PageVCDelegate {
             expiredButton.backgroundColor = deSelectButtonColor
             completionButton.backgroundColor = selectButtonColor
         }
+        moveIndicator(page)
     }
     
     

@@ -21,19 +21,19 @@ class MainViewController: UIViewController {
     
     // MARK: Button
     
-    @IBOutlet weak var unfinishedButton: UIButton! {
+    @IBOutlet private weak var unfinishedButton: UIButton! {
         didSet {
             unfinishedButton.backgroundColor = selectButtonColor
         }
     }
     
-    @IBOutlet weak var completionButton: UIButton! {
+    @IBOutlet private weak var completionButton: UIButton! {
         didSet {
             completionButton.backgroundColor = deSelectButtonColor
         }
     }
     
-    @IBOutlet weak var expiredButton: UIButton! {
+    @IBOutlet private weak var expiredButton: UIButton! {
         didSet {
             expiredButton.backgroundColor = deSelectButtonColor
         }
@@ -135,7 +135,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    @IBAction func expiredButtonTapped(_ sender: UIButton) {
+    @IBAction private func expiredButtonTapped(_ sender: UIButton) {
         unfinishedButton.backgroundColor = deSelectButtonColor
         expiredButton.backgroundColor = selectButtonColor
         completionButton.backgroundColor = deSelectButtonColor
@@ -154,7 +154,7 @@ class MainViewController: UIViewController {
         
     }
     
-    @IBAction func completionButtonTapped(_ sender: UIButton) {
+    @IBAction private func completionButtonTapped(_ sender: UIButton) {
         unfinishedButton.backgroundColor = deSelectButtonColor
         expiredButton.backgroundColor = deSelectButtonColor
         completionButton.backgroundColor = selectButtonColor

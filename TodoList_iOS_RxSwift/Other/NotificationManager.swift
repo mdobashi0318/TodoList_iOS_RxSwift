@@ -8,17 +8,17 @@
 import Foundation
 import UserNotifications
 
-struct NotificationManager {
+struct NotificationManager: Sendable {
     
     /// 通知を全件削除する
-    let allRemoveNotification = {
+    let allRemoveNotification = { @Sendable in
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         print("ToDoの通知を全件削除しました")
     }
     
     
     /// 指定した通知を削除する
-    let removeNotification = { (identifiers: [String]) -> Void in
+    let removeNotification = { @Sendable (identifiers: [String]) -> Void in
         UNUserNotificationCenter
             .current()
             .removePendingNotificationRequests(withIdentifiers: identifiers)

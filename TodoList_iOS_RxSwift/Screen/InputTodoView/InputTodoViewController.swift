@@ -130,7 +130,7 @@ class InputTodoViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-
+        
     }
     
     
@@ -237,7 +237,17 @@ extension InputTodoViewController:  UITableViewDataSource, UITableViewDelegate {
     }
     
     
- 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.section {
+        case TableRow.detail.rawValue:
+            UITableView.automaticDimension
+        default:
+            40
+        }
+    }
+    
+    
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "HeaderCell") as? HeaderCell else {
             return UITableViewHeaderFooterView()

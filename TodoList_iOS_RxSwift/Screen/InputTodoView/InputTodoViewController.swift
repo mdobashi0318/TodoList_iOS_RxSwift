@@ -44,9 +44,11 @@ class InputTodoViewController: UIViewController {
     
     private func initTableView() {
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(UINib(nibName: "TextFieldCell", bundle: nil), forCellReuseIdentifier: "TextFieldCell")
         tableView.register(UINib(nibName: "DatePickerCell", bundle: nil), forCellReuseIdentifier: "DatePickerCell")
         tableView.register(UINib(nibName: "TextViewCell", bundle: nil), forCellReuseIdentifier: "TextViewCell")
+        tableView.register(UINib(nibName: "HeaderCell", bundle: nil), forHeaderFooterViewReuseIdentifier: "HeaderCell")
         
     }
     
@@ -128,7 +130,7 @@ class InputTodoViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-
+        
     }
     
     
@@ -161,7 +163,7 @@ class InputTodoViewController: UIViewController {
 
 
 
-extension InputTodoViewController:  UITableViewDataSource {
+extension InputTodoViewController:  UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
@@ -234,19 +236,42 @@ extension InputTodoViewController:  UITableViewDataSource {
         return UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return switch section {
-        case TableRow.title.rawValue:
-            "タイトル"
-        case TableRow.dateTime.rawValue:
-            "期限"
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.section {
         case TableRow.detail.rawValue:
-            "詳細"
-        case TableRow.complete.rawValue:
-            nil
+            UITableView.automaticDimension
         default:
-            nil
+            40
         }
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "HeaderCell") as? HeaderCell else {
+            return UITableViewHeaderFooterView()
+        }
+        
+        switch section {
+        case TableRow.title.rawValue:
+            header.setTitle("タイトル")
+        case TableRow.dateTime.rawValue:
+            header.setTitle("期限")
+        case TableRow.detail.rawValue:
+            header.setTitle("詳細")
+        default:
+            break
+        }
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        30
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        CGFloat.leastNormalMagnitude
     }
     
 }

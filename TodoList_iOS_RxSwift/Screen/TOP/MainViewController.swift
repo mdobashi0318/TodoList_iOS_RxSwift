@@ -21,19 +21,19 @@ class MainViewController: UIViewController {
     
     // MARK: Button
     
-    @IBOutlet private weak var unfinishedButton: UIButton! {
+    @IBOutlet private weak var unfinishedButton: UIView! {
         didSet {
             unfinishedButton.backgroundColor = selectButtonColor
         }
     }
     
-    @IBOutlet private weak var completionButton: UIButton! {
+    @IBOutlet private weak var completionButton: UIView! {
         didSet {
             completionButton.backgroundColor = deSelectButtonColor
         }
     }
     
-    @IBOutlet private weak var expiredButton: UIButton! {
+    @IBOutlet private weak var expiredButton: UIView! {
         didSet {
             expiredButton.backgroundColor = deSelectButtonColor
         }
@@ -56,6 +56,10 @@ class MainViewController: UIViewController {
         receiveTapNotification()
         pageVC.pageVCDelegate = self
         indicatorViewXConstraint.constant = -(UIScreen.main.bounds.width / 3)
+        
+        unfinishedButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(unfinishedButtonTapped)))
+        completionButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(completionButtonTapped)))
+        expiredButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(expiredButtonTapped)))
     }
     
     
@@ -124,7 +128,7 @@ class MainViewController: UIViewController {
     }
     
     
-    @IBAction private func unfinishedButtonTapped(_ sender: UIButton) {
+    @objc private func unfinishedButtonTapped(_ sender: Any) {
         unfinishedButton.backgroundColor = selectButtonColor
         expiredButton.backgroundColor = deSelectButtonColor
         completionButton.backgroundColor = deSelectButtonColor
@@ -135,7 +139,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    @IBAction private func expiredButtonTapped(_ sender: UIButton) {
+    @objc private func expiredButtonTapped(_ sender: Any) {
         unfinishedButton.backgroundColor = deSelectButtonColor
         expiredButton.backgroundColor = selectButtonColor
         completionButton.backgroundColor = deSelectButtonColor
@@ -154,7 +158,7 @@ class MainViewController: UIViewController {
         
     }
     
-    @IBAction private func completionButtonTapped(_ sender: UIButton) {
+    @objc private func completionButtonTapped(_ sender: Any) {
         unfinishedButton.backgroundColor = deSelectButtonColor
         expiredButton.backgroundColor = deSelectButtonColor
         completionButton.backgroundColor = selectButtonColor
